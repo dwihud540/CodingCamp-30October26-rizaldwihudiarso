@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Expense & Budget Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Expense &amp; Budget Visualizer</h1>
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark/light mode" title="Toggle theme">
+                <span class="theme-icon">moon</span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Balance & Spending Limit -->
+        <section class="balance-section" aria-label="Balance overview">
+            <div class="balance-card">
+                <h2>Total Balance</h2>
+                <p id="totalBalance" class="balance-amount">Rp 0,00</p>
+            </div>
+            <div class="limit-card">
+                <h2>Spending Limit</h2>
+                <div class="limit-input-group">
+                    <span class="currency-prefix">Rp</span>
+                    <input type="number" id="spendingLimit" placeholder="Set a limit" min="0" step="0" aria-label="Spending limit">
+                </div>
+                <p id="limitWarning" class="limit-warning hidden">You have exceeded your spending limit!</p>
+            </div>
+        </section>
+
+        <!-- Input Form -->
+        <section class="form-section" aria-label="Add transaction">
+            <h2>Add Transaction</h2>
+            <form id="transactionForm" novalidate>
+                <div class="form-group">
+                    <label for="itemName">Item Name</label>
+                    <input type="text" id="itemName" placeholder="e.g. Lunch" maxlength="50" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input type="number" id="amount" placeholder="0" min="0" max="99999999999" step="0" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category">
+                        <option value="">Select category</option>
+                        <option value="Food">Food</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Fun">Fun</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-add">Add Transaction</button>
+            </form>
+            <p id="validationMessage" class="validation-message hidden"></p>
+        </section>
+
+        <!-- Transaction List & Chart -->
+        <div class="content-grid">
+            <section class="list-section" aria-label="Transaction list">
+                <div class="list-header">
+                    <h2>Transactions</h2>
+                    <select id="sortSelect" class="sort-select" aria-label="Sort transactions">
+                        <option value="default">Newest first</option>
+                        <option value="amount-asc">Amount: Low to High</option>
+                        <option value="amount-desc">Amount: High to Low</option>
+                        <option value="category">Category A-Z</option>
+                    </select>
+                </div>
+                <div id="transactionList" class="transaction-list" role="list">
+                    <p class="empty-state">No transactions yet. Add one above!</p>
+                </div>
+            </section>
+
+            <section class="chart-section" aria-label="Spending chart">
+                <h2>Spending by Category</h2>
+                <div class="chart-container">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+                <div id="chartEmpty" class="chart-empty hidden">
+                    <p>No spending data to display.</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Monthly Summary -->
+        <section class="summary-section" aria-label="Monthly summary">
+            <h2>Monthly Summary</h2>
+            <div id="monthlySummary" class="monthly-summary" role="list">
+                <p class="empty-state">No spending data available.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>All data is stored locally in your browser.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
